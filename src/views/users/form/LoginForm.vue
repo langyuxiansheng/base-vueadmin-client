@@ -26,9 +26,9 @@
 </template>
 <script type="text/ecmascript-6">
 import Cookies from 'js-cookie';
-import {
-    userLogin
-} from '@/http';
+// import {
+//     userLogin
+// } from '@/http';
 
 export default {
     name: 'LoginForm',
@@ -54,8 +54,8 @@ export default {
         return {
             loading: false,
             sendData: {
-                Account: null,
-                pwd: null,
+                Account: 'admin',
+                pwd: 123456,
                 passWord: null
             },
 
@@ -78,11 +78,13 @@ export default {
             this.$refs[formName].validate(async (valid) => {
                 if (valid) {
                     this.sendData.Password = this.sendData.pwd;
-                    const { data } = await userLogin(this.sendData);
+                    this.$router.push(`/dashboard/index`);
+                    Cookies.set('adminToken', 'data.token');
+                    /* const { data } = await userLogin(this.sendData);
                     if (data) {
                         Cookies.set('adminToken', data.token);
                         this.$router.push(`/dashboard/index`);
-                    }
+                    } */
                 } else {
                     this.$message.error('请输入用户名和密码');
                     return false;
