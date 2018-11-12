@@ -2,6 +2,26 @@
 
 > 基于Vue和ElementUI的后台管理系统基础脚手架
 
+使用了vue-router 和 vuex
+
+ajax请求使用的axios
+
+----------------------------------
+
+提供最基本的脚手架服务
+
+配套使用的后台服务  https://github.com/langyuxiansheng/base-restfulapi-server
+
+项目会持续更新
+
+有问题请给我留言
+
+作者个人网站: http://www.hao2013.cn
+
+CSDN: https://blog.csdn.net/qq_33270001
+
+----------------------------------
+
 ## Build Setup
 
 ``` bash
@@ -26,6 +46,7 @@ npm run e2e
 # run all tests
 npm test
 ```
+
 #图片展示
 ---------------------------------
 ![Image text](https://raw.githubusercontent.com/hongmaju/light7Local/master/img/productShow/20170518152848.png)
