@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>基于Vue和ElementUI的管理后台基础脚手架</title>
+</head>
+<style>
+    body,
+    html,
+    #app {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+<body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+</body>
+<script type="text/javascript">
+    (function() {
+        /*
+         * Description: judge the browser information
+         * Write：Simple
+         * Date：2018.04.26
+         * Version：V1.0
+         */
+
+        //Determine the current browsing type
+        function BrowserType() {
+            var userAgent = navigator.userAgent; //Get the userAgent string of the browser
+            var isOpera = userAgent.indexOf('Opera') > -1; //Determine whether Opera browsers
+            var isIE = userAgent.indexOf('compatible') > -1 && userAgent.indexOf('MSIE') > -1 && !isOpera; //Determine whether IE browsers
+            var isEdge = userAgent.indexOf('Windows NT 6.1; Trident/7.0;') > -1 && !isIE; //Determine whether IE's Edge browser
+            var isFF = userAgent.indexOf('Firefox') > -1; //Determine whether Firefox browsers
+            var isSafari = userAgent.indexOf('Safari') > -1 && userAgent.indexOf('Chrome') == -1; //Determine whether Safari browsers
+            var isChrome = userAgent.indexOf('Chrome') > -1 && userAgent.indexOf('Safari') > -1; //Determine whether Chrome browsers
+
+            if (isIE) {
+                var reIE = new RegExp('MSIE (\\d+\\.\\d+);');
+                reIE.test(userAgent);
+                var fIEVersion = parseFloat(RegExp['$1']);
+                if (fIEVersion == 7) {
+                    return 'IE7';
+                } else if (fIEVersion == 8) {
+                    return 'IE8';
+                } else if (fIEVersion == 9) {
+                    return 'IE9';
+                } else if (fIEVersion == 10) {
+                    return 'IE10';
+                } else if (fIEVersion == 11) {
+                    return 'IE11';
+                } else {
+                    return '0';
+                }
+            } //isIE end
+
+            if (isFF) {
+                return 'FF';
+            }
+            if (isOpera) {
+                return 'Opera';
+            }
+            if (isSafari) {
+                return 'Safari';
+            }
+            if (isChrome) {
+                return 'Chrome';
+            }
+            if (isEdge) {
+                return 'Edge';
+            }
+        }
+
+        var browserType = BrowserType();
+        switch (browserType) {
+        case 'IE6':
+        case 'IE7':
+        case 'IE8':
+        case 'IE9':
+            noIE();
+        }
+
+        /**
+         * Do not support low version IE
+         */
+        function noIE() {
+            var download = 'https://www.google.cn/chrome/';
+            if (confirm('您的浏览器版本过低！系统最低支持IE10及以上版本，\n当前浏览器内核为:' + browserType + ',\n推荐使用Chrome浏览器获得更好的用户体验,\n点击“确定”下载Chrome浏览器！')) {
+                window.location.href = download;
+            } else {
+                var app = document.getElementById('app');
+                var body = document.getElementsByTagName('body')[0];
+                body.style.backgroundColor = '#ccc';
+                var content = '您的浏览器版本过低！系统最低支持IE10及以上版本，<br/>当前浏览器内核为:' + browserType;
+                content += '<br/><a href="' + download + '" title="点击下载Chrome浏览器">点击下载</a>';
+                app.innerHTML = content;
+                app.style.fontSize = '22px';
+                app.style.color = '#F00';
+                app.style.paddingTop = '200px';
+                app.style.textAlign = 'center';
+                app.style.lineHeight = '50px';
+            }
+        }
+    })();
+</script>
+
+</html>

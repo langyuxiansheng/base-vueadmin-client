@@ -1,0 +1,54 @@
+/**=============帅气的分割线================*/
+#app .el-header {
+  padding: 0;
+  height: auto;
+}
+#app .el-main {
+  padding: 0;
+}
+#app .el-main .no-padding {
+  padding: 0;
+}
+.layout-container {
+  width: 100%;
+  height: 100%;
+  background: #f0f2f5;
+}
+.layout-view {
+  padding: 20px 20px 44px 20px;
+}
+/**图片放大**/
+.vue-directive-image-previewer .wrapper {
+  z-index: 10000;
+}
+.vue-directive-image-previewer .vue-directive-image-previewer-pic {
+  z-index: 10002;
+}
+.app-dialog {
+  border-radius: 10px;
+}
+.margin-left-10 {
+  margin-left: 10px;
+}
+/**form表单**/
+.app-form .upload .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.app-form .upload .el-upload .el-upload-dragger {
+  height: 78px;
+}
+.app-form .upload .el-upload .avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 38px;
+  height: 38px;
+  line-height: 70px;
+  text-align: center;
+}
+.app-form .select-block {
+  display: block;
+}

@@ -1,0 +1,305 @@
+@charset "utf-8";
+@import "constant";
+
+.opr-btn-text {
+	font-size: 1rem;
+	font-weight: 600;
+}
+
+.clearfix:after {
+	content: "";
+	height: 0;
+	line-height: 0;
+	display: block;
+	visibility: hidden;
+	clear: both;
+}
+
+.clearfix{
+	zoom:1;
+}
+
+.pull-left{
+	float: left !important;
+}
+
+.pull-right{
+	float: right !important;
+}
+
+.fa{
+	vertical-align: middle;
+	margin-right: 5px;
+	width: 24px;
+	text-align: center;
+	font-size: 18px;
+}
+
+.rh-text-center{
+	text-align: center;
+}
+
+.rh-text-left{
+	text-align: left;
+}
+
+.rh-text-right{
+	text-align: right;
+}
+
+.rh-hide{
+	display: none;
+	visibility: hidden;
+}
+
+//面包屑导航动画
+
+/*fade*/
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity 0.28s;
+}
+
+.fade-enter,
+.fade-leave-active {
+	opacity: 0;
+}
+
+/*fade*/
+.breadcrumb-enter-active,
+.breadcrumb-leave-active {
+	transition: all .5s;
+}
+
+.breadcrumb-enter,
+.breadcrumb-leave-active {
+	opacity: 0;
+	transform: translateX(20px);
+}
+
+.breadcrumb-move {
+	transition: all .5s;
+}
+
+.breadcrumb-leave-active {
+	position: absolute;
+}
+
+//logo
+.rh-icon-logo{
+	width: 148px;
+	height: 50px;
+	background-position: -27px -983px;
+}
+
+.sidebar-menu-vertical{
+	.el-menu{
+		.el-submenu{
+			margin-bottom: 10px;
+			min-width: inherit;
+		}
+	}
+}
+
+.table-pagination{
+	margin-top: 20px;
+}
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar
+{
+	width: 5px;
+	height: 5px;
+	background-color: #fafbfc;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+	border-radius: 10px;
+	background-color: #fafbfc;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.1);
+	background-color: rgba(0,0,0,.1);
+}
+
+//------------------------------------- ├ 布局 ┆ └------------------------------------/
+
+// 盒子宽高
+.size(@w, @h) { width: @w; height: @h; }
+
+// 最小尺寸, 兼容IE6
+.min-width(@min-w) { min-width: @min-w; _width: @min-w; }
+.min-height(@min-h) { min-height: @min-h; _height: @min-h; }
+
+// 内联块级元素, 兼容IE6
+.dib() { display: inline-block; *display: inline; *zoom: 1; }
+
+// 固定定位, 兼容IE6
+.fixed() { position: fixed; _position: absolute; *zoom: 1; }
+
+// 统一盒模型
+.border-box() {
+    *, *:after, *:before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+}
+
+// 文字图片居中
+.center(text-x) { text-align: center; }
+.center(text-y) { display: table-cell; vertical-align: middle; }
+
+// 块级元素水平居中
+.center(auto-x) { display: block; margin-left: auto; margin-right: auto; }
+
+// 居中, 不确定尺寸, 不兼容 IE6
+.center(unknown) { position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto; }
+.center(unknown-x) { position: absolute; left: 0; right: 0; margin-left: auto; margin-right: auto; }
+.center(unknown-y) { position: absolute; top: 0; bottom: 0; margin-top: auto; margin-bottom: auto; }
+
+// 居中, 确定尺寸, 兼容 IE6
+.center(known, @w, @h) {
+    .size(@w, @h);
+    position: absolute; top: 50%; left: 50%; margin-top: -(@w / 2); margin-left: -(@h / 2);
+}
+.center(known-x, @w) {
+    width: @w;
+    position: absolute; left: 50%; margin-left: -(@h / 2);
+}
+.center(known-y, @h) {
+    height: @h;
+    position: absolute; top: 50%; margin-top: -(@w / 2);
+}
+
+// 居中, CSS3 平移方式, 兼容性不行
+.center(translate) { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+// 居中, Flex 方式, 兼容性不行
+.center(flex) { display: flex; align-items: center; justify-content: center; }
+
+// 多个子项布局
+.list(float, @w: 25%) { float: left; width: @w; }
+.list(inline, @w: 25%) { .dib(); width: @w; }
+.list(flex) { flex: 1; }
+
+// 遮罩层, 全屏遮罩、区域遮罩
+.over-screen(fixed) { .fixed(); top: 0; left: 0; right: 0; bottom: 0; }
+.over-screen(absolute) { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
+
+// 容器宽高比固定
+// 100* 1/1 = 100%
+// 100* 3/4 = 75%
+.fixed-ratio(@padding-top: 100%) {
+    position: relative; width: 100%; height: 0; padding-top: @padding-top;
+    img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+}
+
+// 扩展点击区域
+.extend-click() {
+position: relative;
+&:before { content: ''; position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px; }
+}
+
+// 定宽居中页面布局
+.layout-page(@width: 1200px) { width: @width; margin-left: auto; margin-right: auto; }
+
+// 侧边栏
+// 主要区域：overflow: hidden; margin-left: xx; margin-right: xx;
+.sidebar(left, @width) { position: absolute; top: 0; left: 0; width: @width; }
+.sidebar(right, @width) { position: absolute; top: 0; right: 0; width: @width; }
+
+//------------------------------------- ├ 字体 ┆ └------------------------------------/
+
+// 字体大小
+.fz(@fz) { font-size: @fz; }
+
+// 字体大小与行高
+.fz(@fz, @lh) { font-size: @fz; line-height: @lh; }
+
+// 字体大小、行高、高度
+.fz(@fz, @h, @lh: @h) { font-size: @fz; height: @h; line-height: @lh; }
+
+// 行高与高度
+.lh(@h, @lh: @h) { height: @h; line-height: @lh; }
+
+// 字体颜色, 包括链接与非链接
+.color(@color) { color: @color;}
+
+// 字体颜色 + 自身 Hover
+.color(@color, @hovercolor) {
+    color: @color;
+    &:hover { color: @hovercolor; }
+}
+
+// 字体颜色 + 链接 Hover
+.color(@color, @acolor, @hovercolor) {
+    color: @color;
+    a {
+        color: @acolor;
+        &:hover { color: @hovercolor; }
+    }
+}
+
+// 正常字体样式
+.normal-font() { font-weight: normal; font-style: normal; }
+
+// 辅助性文字（灰色）
+.assist-font(@color: #b0b0b0, @fz: 14px) { color: @color; font-size: @fz; }
+
+// 禁止换行, 文本溢出省略号显示 (一行)
+.ellipsis() {
+    white-space: normal; word-wrap: break-word; word-break: break-all;
+    -o-text-overflow: ellipsis; -ms-text-overflow: ellipsis; text-overflow:ellipsis; overflow:hidden;
+}
+
+// 文本溢出省略号显示 (多行)
+// 只支持 webkit 浏览器, 解决方案：高度 = 行高*行数
+// height: 90px; line-height: 30px; -webkit-line-clamp: 3;
+.ellipsis-mult(@n: 3) {
+    display: -webkit-box; -webkit-box-orient: vertical;-webkit-line-clamp: @n; word-break: break-all;
+    -o-text-overflow: ellipsis; -ms-text-overflow: ellipsis; text-overflow:ellipsis; overflow: hidden;
+}
+
+// 书写模式：牌匾从右至左水平单行排版效果、文笺从右至左、从上至下排版效果
+.retext(x) { direction: rtl; unicode-bidi: bidi-override; }
+.retext(y) { writing-mode: tb-rl; writing-mode: vertical-rl; }
+
+// 文字透明
+.transparent-text() { font: 0/0 serif; text-shadow: none; color: transparent; }
+
+// 文字隐藏（常用于SEO优化）
+.hidden-text() { text-indent : -9999px; overflow: hidden; text-align: left; }
+// 文字外发光效果
+.glow-text(@r: 10px, @color: gold) { text-shadow: 0 0 @r @color; }
+
+//------------------------------------- ├ 图像 ┆ └------------------------------------
+
+// 用 max-width 来防止图片撑破容器
+.max-img() { display: block; max-width: 100%; height: auto; }
+
+// 2x 3x 背景图片
+.bg-image(@url) {
+    background-image: url("@url + '@2x.png'");
+    @media (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
+    background-image: url("@url + '@3x.png'");
+}
+}
+// 全屏大图背景
+.fullscreen-bg(@url) {
+    width: 100vw;
+    height: 100vh;
+    background: url(@url) no-repeat 50% 50%;
+    background-size: cover;
+}
+// 滤镜: 将彩色照片显示为黑白照片
+.grayscale() {
+filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+}
