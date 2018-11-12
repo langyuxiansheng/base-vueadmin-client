@@ -8,8 +8,8 @@ import mergedApis from './apis';
 
 // const TEST_API = 'http://192.168.0.220';
 const TEST_API = '/api';
-// const TEST_API = 'http://1g9z518835.iok.la';
-const PRODUCTION_API = 'https://api.pandaparking.cn';
+// const TEST_API = 'http://xxxx.iok.la';
+const PRODUCTION_API = 'https://api.xxxxx.cn';
 const hasProduction = process.env.NODE_ENV === 'production';
 const base = hasProduction ? PRODUCTION_API : TEST_API;
 const http = ({
