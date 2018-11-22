@@ -25,19 +25,7 @@ const actions = {
      */
     getRoutes({ commit, state }, data) {
         commit(types.GET_ROUTE_OPTIONS, data);
-    },
-
-    /**
-     * 获取诱导牌列表
-     *
-     * @param {*} { commit }
-     * @param {*} payload
-     */
-    async getGuideList({ commit }) {
-        // const { data } = await guideList();
-        // commit('GET_GUIDE_LIST', data);
     }
-
 };
 
 export default actions;

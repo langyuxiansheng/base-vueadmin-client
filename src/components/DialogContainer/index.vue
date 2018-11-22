@@ -1,6 +1,7 @@
 <template>
     <el-dialog
         v-if="dialogConf.isShow"
+        :close-on-click-modal="dialogConf.closeOnClickModal || false"
         :width="dialogConf.width"
         :center="dialogConf.center"
         :visible.sync="dialogConf.isShow">
@@ -24,7 +25,8 @@ export default {
                 width: null,
                 isShow: false,
                 center: true,
-                title: null
+                title: null,
+                closeOnClickModal: true
             }
         }
     }

@@ -1,76 +1,62 @@
 <template>
-    <div>
+    <div class="app-permission">
         <TableUtilContainer :utils="{
             left:[{label:'',slot:'add'}],
             right:[{label:'',slot:'search'}],
         }">
-            <el-button slot="add" type="primary" icon="el-icon-plus" plain @click="showDialog ({type:'add'})">添加角色</el-button>
+            <el-button slot="add" type="primary" icon="el-icon-plus" plain @click="showDialog ({type:'add'})">添加权限</el-button>
         </TableUtilContainer>
         <el-row :gutter="20">
-            <el-col :span="8">
-                <el-tree :data="data5" show-checkbox node-key="id" default-expand-all :expand-on-click-node="false">
-                    <span class="custom-tree-node" slot-scope="{ node, data }">
-                        <span>{{ node.label }}</span>
-                        <span>
-                            <el-button type="text" size="mini" @click="() => append(data)">
-                                Append
-                            </el-button>
-                            <el-button type="text" size="mini" @click="() => remove(node, data)">
-                                Delete
-                            </el-button>
-                        </span>
-                    </span>
+            <!-- <el-col :xs="24" :md="6" :lg="6">
+                <el-tree class="app-tree" :data="trees" :props="treeConfig" node-key="id" default-expand-all :expand-on-click-node="false">
+                    <div class="custom-tree-node" slot-scope="{ node, data }">
+                        <span @contextmenu.prevent="showDialog ({type:'add',nodeData:data})">{{ node.label }}</span>
+                        <ul class='contextmenu' v-show="visible" :style="{left:left+'px',top:top+'px'}">
+                            <li>关闭</li>
+                            <li>关闭其它</li>
+                            <li>关闭全部</li>
+                        </ul>
+                    </div>
                 </el-tree>
+            </el-col> -->
+            <el-col :xs="24" :md="24" :lg="24">
+                <el-table :data="table.data" stripe>
+                    <!-- <el-table-column align="center" type="index" :label="$t('label.index_num')"/> -->
+                    <el-table-column v-for="(col,k) in tableCols" :key="k" :show-overflow-tooltip="col.key !== 'operation' && col.overflow" :align="col.align || 'center'" :width="col.width" :label="col.label">
+                        <template slot-scope="scope">
+                            <span v-if="col.key === 'operation'">
+                                <el-button type="warning" @click="showDialog ({type:'update',data:scope.row})">编辑</el-button>
+                                <el-button type="danger" @click="delHandler(scope.row.permissionId)">删除</el-button>
+                            </span>
+                            <span v-if="col.key === 'PermissionType'">
+                                {{scope.row[col.key] == 1 ? '菜单':'按钮'}}
+                            </span>
+                            <span v-else>{{scope.row[col.key]}}</span>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-pagination class="table-pagination" @current-change="handleCurrentChange" :page-size="$store.state.config.pagination.size" :page-sizes="$store.state.config.pagination.pageSizes" :layout="$store.state.config.pagination.layout" :total="table.total">
+                </el-pagination>
             </el-col>
         </el-row>
+        <PermissionFormDialog ref="PermissionFormDialog" @refresh="init()" />
     </div>
 </template>
 
 <script>
-import { getPlatformRoles, delPlatformRole } from '@/http';
-import RoleFormDialog from './form/RoleFormDialog';
+import { getPermissions, delPermission } from '@/http';
+// import util from '@/common/method/util';
+import PermissionFormDialog from './form/PermissionFormDialog.vue';
 export default {
     name: 'AdminManage',
     components: {
-        RoleFormDialog
+        PermissionFormDialog
     },
     data () {
-        const data = [{
-            id: 1,
-            label: '一级 1',
-            children: [{
-                id: 4,
-                label: '二级 1-1',
-                children: [{
-                    id: 9,
-                    label: '三级 1-1-1'
-                }, {
-                    id: 10,
-                    label: '三级 1-1-2'
-                }]
-            }]
-        }, {
-            id: 2,
-            label: '一级 2',
-            children: [{
-                id: 5,
-                label: '二级 2-1'
-            }, {
-                id: 6,
-                label: '二级 2-2'
-            }]
-        }, {
-            id: 3,
-            label: '一级 3',
-            children: [{
-                id: 7,
-                label: '二级 3-1'
-            }, {
-                id: 8,
-                label: '二级 3-2'
-            }]
-        }];
         return {
+            visible: false,
+            top: 0,
+            left: 0,
             table: {
                 queryData: {
                     keyWord: null, //搜索关键字
@@ -83,8 +69,37 @@ export default {
 
             tableCols: [
                 {
-                    key: 'RoleName',
-                    label: '角色'
+                    key: 'permissionId',
+                    label: '权限ID'
+                },
+                {
+                    key: 'permissionName',
+                    label: '权限名'
+                },
+                {
+                    key: 'permissionType',
+                    label: '权限类型'
+                },
+                {
+                    key: 'parentId',
+                    label: '权限父级ID'
+                },
+                {
+                    key: 'path',
+                    label: '菜单路径'
+                },
+                {
+                    key: 'component',
+                    label: '组件名称'
+                },
+                {
+                    key: 'permissionValue',
+                    label: '权限排序值'
+                },
+                {
+                    key: 'meta',
+                    label: '元值',
+                    overflow: false
                 },
                 {
                     key: 'operation',
@@ -92,8 +107,10 @@ export default {
                     width: '180px'
                 }
             ],
-
-            data5: JSON.parse(JSON.stringify(data))
+            trees: [],
+            treeConfig: {
+                label: 'permissionName'
+            }
         };
     },
     created () {
@@ -102,9 +119,11 @@ export default {
     methods: {
 
         async init () {
-            const { data, total } = await getPlatformRoles(this.table.queryData);
-            this.table.data = data;
+            const { data, total } = await getPermissions(this.table.queryData);
+            // const res = await getPermissions({});
+            this.table.data = data.menus;
             this.table.total = total;
+            // this.trees = util.toTree(res.data, 'ParentID', 'PermissionID', 0);
         },
 
         /**
@@ -123,25 +142,27 @@ export default {
         },
 
         /**
-	     * 添加角色
+	     * 添加权限
 	     */
-        showDialog ({ type }) {
+        async showDialog ({ type, data, nodeData }) {
             if (type === 'add') {
-                this.$refs.RoleFormDialog.init({ title: '添加角色' });
+                this.$refs.PermissionFormDialog.init({ type, title: '添加权限' });
+            } else {
+                this.$refs.PermissionFormDialog.init({ type, title: '编辑权限', data });
             }
         },
 
         /**
-         * 注销平台管理员
+         * 删除权限
          */
-        delRole (RoleID) {
-            this.$confirm('此操作将注销该角色, 是否继续?', '敏感操作提示', {
+        delHandler (permissionId) {
+            this.$confirm('此操作将删除该权限, 是否继续?', '敏感操作提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 center: true,
                 type: 'warning'
             }).then(async () => {
-                const { code } = await delPlatformRole(RoleID);
+                const { code } = await delPermission(permissionId);
                 if (code === 200) {
                     this.$message.success(this.$t('msg.deleted_success'));
                     this.init();
@@ -150,18 +171,11 @@ export default {
         },
 
         append (data) {
-            const newChild = { id: data.id++, label: 'testtest', children: [] };
-            if (!data.children) {
-                this.$set(data, 'children', []);
-            }
-            data.children.push(newChild);
+
         },
 
         remove (node, data) {
-            const parent = node.parent;
-            const children = parent.data.children || parent.data;
-            const index = children.findIndex(d => d.id === data.id);
-            children.splice(index, 1);
+
         }
     }
 };

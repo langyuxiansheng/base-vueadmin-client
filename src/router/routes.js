@@ -8,10 +8,9 @@ const Layout = () =>
 
 const Dashboard = () =>
     import ('@/views/dashboard');
-//运营管理
-const GameManage = () =>
-    import ('@/views/operations/GameManage');
-
+//示例功能
+const ListDemo = () =>
+    import ('@/views/demos/ListDemo');
 //系统设置
 const Permission = () =>
     import ('@/views/system/Permission');
@@ -19,6 +18,7 @@ const RoleManage = () =>
     import ('@/views/system/RoleManage');
 const AdminManage = () =>
     import ('@/views/system/AdminManage');
+
 export default [{
         path: '/dashboard',
         name: 'dashboard',
@@ -37,48 +37,23 @@ export default [{
             component: Dashboard
         }]
     },
+
     {
-        path: '/operations',
-        name: 'operations',
+        path: '/demos',
+        name: 'demos',
         meta: {
             requireAuth: false, //菜单权限
-            title: '运营管理', //菜单名
-            icon: 'fa fa-diamond', //菜单图标
+            title: '示例功能', //菜单名
+            icon: 'fa fa-sitemap', //菜单图标
         },
         component: Layout,
         children: [{
-            path: 'gameManage',
+            path: 'listDemo',
             meta: {
-                title: '游戏管理',
+                title: '列表Demo',
                 requireAuth: false
             },
-            component: GameManage
-        }]
-    },
-    {
-        path: '/member',
-        name: 'member',
-        meta: {
-            requireAuth: false, //菜单权限
-            title: '会员管理', //菜单名
-            icon: 'fa fa-users', //菜单图标
-        },
-        component: Layout,
-        children: [{
-            path: 'index',
-            meta: {
-                title: 'VIP会员',
-                requireAuth: false
-            },
-            component: Dashboard,
-            /*  children: [{
-                 meta: {
-                     title: '收入分析',
-                     requireAuth: false
-                 },
-                 path: 'incomeRecord',
-                 component: IncomeRecord
-             }] */
+            component: ListDemo,
         }]
     },
     {

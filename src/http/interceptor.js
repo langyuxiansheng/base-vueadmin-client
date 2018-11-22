@@ -15,7 +15,6 @@ axios.defaults.timeout = 15000;
 
 // 配置通用请求动画
 let loading = null;
-
 axios.interceptors.request.use(config => {
     console.time('ajax请求耗时');
     config.headers.Authorization = `Bearer ${Cookies.get('adminToken')}`;
@@ -24,7 +23,6 @@ axios.interceptors.request.use(config => {
         text: '拼命加载中...',
         background: 'rgba(255, 255, 255, .6)'
     });
-
     return config;
 }, err => {
     loading.close();
@@ -36,31 +34,31 @@ axios.interceptors.response.use(response => {
     let data = {};
     if (response && response.data) {
         switch (Number(response.data.code)) {
-        case 200:
-            data = response.data;
-            break;
-            /* case 401: // 401 清除token信息并跳转到登录页面
-                    Message.error({
-                        message: '身份过期，请重新登录'
-                    });
-                    setTimeout(() => {
-                        router.replace({
-                            path: '/login',
-                            query: { redirect: router.currentRoute.fullPath }
-                        });
-                    }, 1200);
-                    break; */
-        case 403: //无权限
-            router.replace({
-                name: '/403',
-                query: { redirect: router.currentRoute.fullPath }
-            });
-            break;
-        default:
-            Message.error({
-                message: response.data.msg
-            });
-            break;
+            case 200:
+                data = response.data;
+                break;
+                /* case 401: // 401 清除token信息并跳转到登录页面
+                                        Message.error({
+                                            message: '身份过期，请重新登录'
+                                        });
+                                        setTimeout(() => {
+                                            router.replace({
+                                                path: '/login',
+                                                query: { redirect: router.currentRoute.fullPath }
+                                            });
+                                        }, 1200);
+                                        break; */
+            case 403: //无权限
+                router.replace({
+                    name: '/403',
+                    query: { redirect: router.currentRoute.fullPath }
+                });
+                break;
+            default:
+                Message.error({
+                    message: response.data.msg
+                });
+                break;
         }
     }
     loading.close();

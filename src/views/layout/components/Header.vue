@@ -61,6 +61,7 @@ export default {
                 customClass: 'bg-warning'
             }).then(() => {
                 Cookies.remove('adminToken');
+                window.localStorage.removeItem('AdminSessionData');
                 this.$router.push(`/login`);
             }).catch(() => {
                 this.$message({

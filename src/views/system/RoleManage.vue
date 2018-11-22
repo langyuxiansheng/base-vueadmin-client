@@ -12,11 +12,11 @@
             <el-table-column v-for="(col,k) in tableCols" :key="k" :show-overflow-tooltip="col.key !== 'operation'" :align="col.align || 'center'" :width="col.width" :label="col.label">
                 <template slot-scope="scope">
                     <span v-if="col.key === 'operation'">
-                        <el-button type="primary">设置权限</el-button>
-                        <el-button type="danger" @click="delRole(scope.row.RoleID)">注销</el-button>
+                        <el-button type="primary" @click="showDialog ({ type:'setting', roleId:scope.row.roleId })">设置权限</el-button>
+                        <el-button type="danger" @click="delRole(scope.row.roleId)">注销</el-button>
                     </span>
                     <span v-if="col.key === 'RoleName'">
-                        {{scope.row.IsAdmin ? '超级管理员': scope.row[col.key]}}
+                        {{scope.row.isAdmin ? '超级管理员': scope.row[col.key]}}
                     </span>
                     <span v-else>{{scope.row[col.key]}}</span>
                 </template>
@@ -25,16 +25,19 @@
         <el-pagination class="table-pagination" @current-change="handleCurrentChange" :page-size="$store.state.config.pagination.size" :page-sizes="$store.state.config.pagination.pageSizes" :layout="$store.state.config.pagination.layout" :total="table.total">
         </el-pagination>
         <RoleFormDialog ref="RoleFormDialog" @refresh="init()" />
+        <SetPermissionFormDialog ref="SetPermissionFormDialog" @refresh="init()" />
     </div>
 </template>
 
 <script>
 import { getPlatformRoles, delPlatformRole } from '@/http';
 import RoleFormDialog from './form/RoleFormDialog';
+import SetPermissionFormDialog from './form/SetPermissionFormDialog';
 export default {
     name: 'AdminManage',
     components: {
-        RoleFormDialog
+        RoleFormDialog,
+        SetPermissionFormDialog
     },
     data () {
         return {
@@ -50,7 +53,7 @@ export default {
 
             tableCols: [
                 {
-                    key: 'RoleName',
+                    key: 'roleName',
                     label: '角色'
                 },
                 {
@@ -90,23 +93,25 @@ export default {
         /**
 	     * 添加角色
 	     */
-        showDialog ({ type }) {
+        showDialog ({ type, roleId }) {
             if (type === 'add') {
                 this.$refs.RoleFormDialog.init({ title: '添加角色' });
+            } else if (type === 'setting') {
+                this.$refs.SetPermissionFormDialog.init({ title: '设置权限', roleId });
             }
         },
 
         /**
          * 注销平台管理员
          */
-        delRole (RoleID) {
+        delRole (roleId) {
             this.$confirm('此操作将注销该角色, 是否继续?', '敏感操作提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 center: true,
                 type: 'warning'
             }).then(async () => {
-                const { code } = await delPlatformRole(RoleID);
+                const { code } = await delPlatformRole(roleId);
                 if (code === 200) {
                     this.$message.success(this.$t('msg.deleted_success'));
                     this.init();

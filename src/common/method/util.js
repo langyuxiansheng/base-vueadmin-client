@@ -597,5 +597,28 @@ export default {
         param.left = Math.round((maxWidth - param.width) / 2);
         param.top = Math.round((maxHeight - param.height) / 2);
         return param;
+    },
+
+    /**
+     * 线性数据转化为树
+     * @param {Object} data 源数据
+     * @param {Object} parentKey 父级id key
+     * @param {childrenKey} childrenKey 子集key
+     * @param {Object} pId 父级标识符
+     */
+    toTree(data, parentKey, childrenKey, pId) {
+        var tree = [];
+        var temp = null;
+        for (let i = 0; i < data.length; i++) {
+            if (data[i][parentKey] == pId) {
+                var obj = data[i];
+                temp = this.toTree(data, parentKey, childrenKey, data[i][childrenKey]);
+                if (temp.length > 0) {
+                    obj.children = temp;
+                }
+                tree.push(obj);
+            }
+        }
+        return tree;
     }
 };

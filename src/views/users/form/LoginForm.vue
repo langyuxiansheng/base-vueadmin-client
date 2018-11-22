@@ -4,10 +4,10 @@
         <div class="login-form-body">
             <el-row>
                 <el-col :span="24">
-                    <el-form :model="sendData" status-icon :rules="rules" ref="Form" class="right-form">
-                        <el-form-item class="user-label" label="" prop="identifier">
+                    <el-form :model="sendData" status-icon :rules="rules" ref="Form" class="right-form" @submit.native.prevent>
+                        <el-form-item class="user-label" label="" prop="account">
                             <div class="user-input">
-                                <el-input type="text" v-model="sendData.Account" placeholder="请输入管理员账号" auto-complete="off"></el-input>
+                                <el-input type="text" v-model="sendData.account" placeholder="请输入管理员账号" auto-complete="off"></el-input>
                             </div>
                         </el-form-item>
                         <el-form-item class="user-label" label="" prop="pwd">
@@ -26,9 +26,8 @@
 </template>
 <script type="text/ecmascript-6">
 import Cookies from 'js-cookie';
-// import {
-//     userLogin
-// } from '@/http';
+import {userLogin} from '@/http';
+import permissions from '@/router/permission';
 
 export default {
     name: 'LoginForm',
@@ -54,13 +53,13 @@ export default {
         return {
             loading: false,
             sendData: {
-                Account: 'admin',
-                pwd: 123456,
+                account: null,
+                pwd: null,
                 passWord: null
             },
 
             rules: {
-                Account: [
+                account: [
                     { required: true, message: '请输入管理员账号', trigger: 'blur' },
                     { validator: validateAccount, message: '请输入管理员账号', trigger: 'blur' }
                 ],
@@ -77,14 +76,20 @@ export default {
         submitForm (formName) {
             this.$refs[formName].validate(async (valid) => {
                 if (valid) {
-                    this.sendData.Password = this.sendData.pwd;
-                    this.$router.push(`/dashboard/index`);
-                    Cookies.set('adminToken', 'data.token');
-                    /* const { data } = await userLogin(this.sendData);
+                    this.sendData.password = this.sendData.pwd;
+                    const { data } = await userLogin(this.sendData);
                     if (data) {
-                        Cookies.set('adminToken', data.token);
+                        const { token, userInfo, menus } = data;
+                        Cookies.set('adminToken', token);
+                        if (menus) { //普通管理员登录
+                            window.localStorage.setItem(`adminSessionData`, JSON.stringify({userInfo, menus}));
+                        } else {
+                            window.localStorage.setItem(`adminSessionData`, JSON.stringify({userInfo}));
+                        }
+                        //映射路由表到vuex
+                        this.$store.dispatch('getRoutes', permissions.getRoutes());
                         this.$router.push(`/dashboard/index`);
-                    } */
+                    }
                 } else {
                     this.$message.error('请输入用户名和密码');
                     return false;

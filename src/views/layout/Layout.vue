@@ -36,7 +36,6 @@ export default {
             return this.$route.path + Date.parse(new Date());
         },
         ...mapGetters([
-            'isCollapseSidebar',
             'cachedViews'
         ])
     },

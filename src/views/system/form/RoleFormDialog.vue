@@ -1,10 +1,10 @@
 <template>
     <DialogContainer :dialogConf="dialogConf">
         <el-row class="app-form" :gutter="$store.state.config.dialogFormGutterWidth">
-            <el-form :model="sendData" :label-position="$store.state.config.labelPosition" :rules="rules" ref="AppForm" label-width="125px">
+            <el-form :model="sendData" :label-position="$store.state.config.labelPosition" :rules="rules" ref="AppForm" label-width="125px" @submit.native.prevent>
                 <el-col :span="24">
-                    <el-form-item label="角色名称" prop="RoleName">
-                        <el-input v-model="sendData.RoleName" placeholder="请输入角色名称"></el-input>
+                    <el-form-item label="角色名称" prop="roleName">
+                        <el-input v-model="sendData.roleName" placeholder="请输入角色名称"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
@@ -35,12 +35,12 @@ export default {
 
             //数据
             sendData: {
-                RoleName: null
+                roleName: null
             },
 
             //验证规则
             rules: {
-                RoleName: [
+                roleName: [
                     { required: true, message: '请输入角色名称', trigger: 'blur' },
                     { min: 1, max: 32, message: '长度在 1 到 20 个字符', trigger: 'blur' }
                 ]

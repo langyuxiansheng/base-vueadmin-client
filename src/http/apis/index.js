@@ -1,9 +1,9 @@
 import user from './user';
-import operations from './operations';
 import system from './system';
+import demos from './demos';
 
 export default {
     ...user,
-    ...operations,
-    ...system
+    ...system,
+    ...demos
 };

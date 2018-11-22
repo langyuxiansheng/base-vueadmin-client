@@ -69,7 +69,7 @@ export default {
 .app-breadcrumb {
   display: inline-block;
   font-size: 16px;
-  margin-left: 10px;
+  margin-left: 20px;
   align-self: center;
   .no-redirect {
     color: #3d9eff;

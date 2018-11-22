@@ -2,14 +2,16 @@
     <div class="sidebar-menu">
         <h3 class="title">管理平台</h3>
         <el-menu background-color="#000c17" text-color="#fff" active-text-color="#1890ff" :default-active="$route.path" unique-opened router>
-            <el-submenu v-for="(menu,k) in routeOptions" :key="k" :index="menu.meta.title" popper-class="sidebar-submenu">
+            <el-submenu v-for="(menu,k) in routeOptions" v-if="menu.meta.requireAuth" :key="k" :index="menu.meta.title" popper-class="sidebar-submenu">
                 <template slot="title">
                     <i :class="menu.meta.icon"></i>
                     <span>{{menu.meta.title}}</span>
                 </template>
-                <el-menu-item v-if="menu.children" v-for="item in menu.children" :key="item.name" :index="`${menu.path}/${item.path}`">
-                    <span class="sidebar-menu-item">{{item.meta.title}}</span>
-                </el-menu-item>
+                <template v-if="menu.children">
+                    <el-menu-item v-for="item in menu.children" v-if="item.meta.requireAuth" :key="item.name" :index="`${menu.path}/${item.path}`">
+                        <span class="sidebar-menu-item">{{item.meta.title}}</span>
+                    </el-menu-item>
+                </template>
             </el-submenu>
         </el-menu>
     </div>
@@ -32,7 +34,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .sidebar-menu {
-  width: 250px;
+  width: 210px;
   background: #001529;
   height: 100%;
   .title {

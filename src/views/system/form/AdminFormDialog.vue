@@ -1,16 +1,16 @@
 <template>
     <DialogContainer :dialogConf="dialogConf">
         <el-row class="app-form" :gutter="$store.state.config.dialogFormGutterWidth">
-            <el-form :model="sendData" :label-position="$store.state.config.labelPosition" :rules="rules" ref="AppForm" label-width="125px">
+            <el-form :model="sendData" :label-position="$store.state.config.labelPosition" :rules="rules" ref="AppForm" label-width="125px" @submit.native.prevent>
                 <el-col :span="24">
-                    <el-form-item label="姓名或昵称" prop="AdminName">
-                        <el-input v-model="sendData.AdminName" placeholder="请输入姓名或昵称"></el-input>
+                    <el-form-item label="姓名或昵称" prop="adminName">
+                        <el-input v-model="sendData.adminName" placeholder="请输入姓名或昵称"></el-input>
                     </el-form-item>
-                    <el-form-item label="账号" prop="Account">
-                        <el-input v-model="sendData.Account" placeholder="请输入账号"></el-input>
+                    <el-form-item label="账号" prop="account">
+                        <el-input v-model="sendData.account" placeholder="请输入账号"></el-input>
                     </el-form-item>
-                    <el-form-item label="密码" prop="Password">
-                        <el-input v-model="sendData.Password" placeholder="请输入密码"></el-input>
+                    <el-form-item label="密码" prop="password">
+                        <el-input v-model="sendData.password" placeholder="请输入密码"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
@@ -41,24 +41,24 @@ export default {
 
             //数据
             sendData: {
-                AdminName: null,
-                Account: null,
-                Password: null
+                adminName: null,
+                account: null,
+                password: null
             },
 
             //验证规则
             rules: {
-                AdminName: [
+                adminName: [
                     { required: true, message: '请输入姓名或昵称', trigger: 'blur' },
                     { min: 1, max: 32, message: '长度在 1 到 20 个字符', trigger: 'blur' }
                 ],
-                Account: [
+                account: [
                     { required: true, message: '请输入账号', trigger: 'blur' },
-                    { min: 5, max: 32, message: '长度在 1 到 20 个字符', trigger: 'blur' }
+                    { min: 5, max: 32, message: '长度在 5 到 32 个字符', trigger: 'blur' }
                 ],
-                Password: [
+                password: [
                     { required: true, message: '请输入密码', trigger: 'blur' },
-                    { min: 6, max: 32, message: '长度在 1 到 20 个字符', trigger: 'blur' }
+                    { min: 6, max: 32, message: '长度在 6 到 32 个字符', trigger: 'blur' }
                 ]
             }
         };
