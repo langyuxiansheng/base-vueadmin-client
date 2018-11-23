@@ -1,16 +1,19 @@
-# base-vueadmin-client
+# base-vueadmin-client 简介
 
-> 基于Vue和ElementUI的后台管理系统基础脚手架
+- 基于Vue 2.x和ElementUI 2.x的后台管理系统基础脚手架
+- 使用 vue-router 和 vuex
+- ajax请求使用的axios
+- 工程化、模块化的风格，让你的开发更轻松
+- 使用 async await 从此让你告别繁琐的then回调，更简洁的风格和语法
+- 集成权限系统
+- resetful 风格，每个请求都一目了然
 
-使用了vue-router 和 vuex
+---
+### 下载使用请看这里
 
-ajax请求使用的axios
+此项目提供最基础的管理后台解决方案,是一套最基础的、开箱即用的vue管理后台框架
 
-----------------------------------
-
-提供最基本的脚手架服务
-
-配套使用的后台服务  https://github.com/langyuxiansheng/base-restfulapi-server
+可以配套使用的后台API服务 https://github.com/langyuxiansheng/base-restfulapi-server
 
 项目会持续更新
 
@@ -24,41 +27,11 @@ ajax请求使用的axios
 
 CSDN: https://blog.csdn.net/qq_33270001
 
-----------------------------------
+---
 
-## Build Setup
-
-``` bash
-#clone
-git clone https://github.com/langyuxiansheng/base-vueadmin-client.git
-
-#cd base-vueadmin-client
-cd base-vueadmin-client
-
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
-```
 
 #图片展示
----------------------------------
+---
 登陆页面 Y
 ![Image text](https://github.com/langyuxiansheng/base-vueadmin-client/blob/master/images/login.png)
 
@@ -75,7 +48,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 
 目录结构说明
-------------
+---
 
 ```bash
 .
@@ -115,7 +88,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 ## 为了规范所有的项目开发者风格一致,建议不要删除eslint 的验证
 
 更新说明
---------------------------------------------------------------
+---
 *v1.0.1 2018年11月22日15:49:13*
 
 1.	更新权限系统。
@@ -126,4 +99,4 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 1.	创建项目。
 
---------------------------------------------------------------
+---
