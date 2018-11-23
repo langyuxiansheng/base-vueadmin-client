@@ -10,8 +10,11 @@ import { Loading, Message } from 'element-ui';
 
 // axios 配置
 axios.defaults.timeout = 15000;
-// axios.defaults.baseURL = 'http://';
-// axios.defaults.headers.common['language'] = common.getCurrentLanguage();
+
+// const TEST_API = 'http://192.168.0.220';
+// const PRODUCTION_API = 'https://api.xxxxx.cn';
+axios.defaults.baseURL = process.env.BASE_URL;
+
 
 // 配置通用请求动画
 let loading = null;
@@ -38,16 +41,16 @@ axios.interceptors.response.use(response => {
                 data = response.data;
                 break;
                 /* case 401: // 401 清除token信息并跳转到登录页面
-                                        Message.error({
-                                            message: '身份过期，请重新登录'
-                                        });
-                                        setTimeout(() => {
-                                            router.replace({
-                                                path: '/login',
-                                                query: { redirect: router.currentRoute.fullPath }
-                                            });
-                                        }, 1200);
-                                        break; */
+                Message.error({
+                    message: '身份过期，请重新登录'
+                });
+                setTimeout(() => {
+                    router.replace({
+                        path: '/login',
+                        query: { redirect: router.currentRoute.fullPath }
+                    });
+                }, 1200);
+                break; */
             case 403: //无权限
                 router.replace({
                     name: '/403',
