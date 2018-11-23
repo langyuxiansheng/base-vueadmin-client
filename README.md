@@ -79,7 +79,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 ```bash
 .
-├── README.md				# 项目说明文件
+├── README.md               # 项目说明文件
 ├── .babelrc                # Babel 配置文件
 ├── .editorconfig           # 编辑器风格定义文件
 ├── .eslintignore           # ESlint 忽略文件列表
