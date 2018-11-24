@@ -53,8 +53,8 @@ export default {
         return {
             loading: false,
             sendData: {
-                account: null,
-                pwd: null,
+                account: 'admin',
+                pwd: 123456,
                 passWord: null
             },
 
