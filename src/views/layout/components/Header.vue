@@ -9,8 +9,8 @@
                     <img class="user-avatar" v-image-preview src="../../../assets/imgs/default-avatar.png" alt="user">
                     <el-dropdown @command="handleCommand">
                         <div class="user-content">
-                            <h5>暂无</h5>
-                            <p class="user-name">超级管理员</p>
+                            <h5>{{user.adminName || '暂无' }}</h5>
+                            <p class="user-name">{{user.roleName || '未知'}}</p>
                         </div>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item command="personCenter">个人中心</el-dropdown-item>
@@ -20,17 +20,20 @@
                 </div>
             </div>
         </div>
+        <PersonalCenter ref="PersonalCenter" @refresh="init()" />
     </div>
 </template>
 
 <script  type="text/ecmascript-6">
 import BreadcrumbBar from './BreadcrumbBar.vue';
+import PersonalCenter from './PersonalCenter.vue';
 import Cookies from 'js-cookie';
 
 export default {
     name: 'HeaderTop',
     components: {
-        BreadcrumbBar
+        BreadcrumbBar,
+        PersonalCenter
     },
     data () {
         return {
@@ -40,18 +43,33 @@ export default {
     },
 
     methods: {
+        init() {
+            this.$message.error(`您已修改密码,请使用新密码登录系统!`);
+            setTimeout(() => { this.$router.push(`/login`); }, 1000 * 1);
+        },
 
-        //下拉回调
+        /**
+	     * 弹出层操作
+	     */
+        showDialog () {
+            this.$refs.PersonalCenter.init({ title: '个人中心' });
+        },
+
+        /**
+         * 下拉回调
+         */
         handleCommand (command) {
             switch (command) {
             case 'logout': //退出系统
                 this.logout(); break;
             case 'personCenter':
-                this.showDetailDialog(); break;
+                this.showDialog(); break;
             }
         },
 
-        //退出系统
+        /**
+         * 退出系统
+         */
         logout () {
             this.$confirm('您确定要退出系统吗?', '提示', {
                 cancelButtonText: '取消',
@@ -69,6 +87,12 @@ export default {
                     message: '已取消操作'
                 });
             });
+        }
+    },
+    computed: {
+        user() {
+            const {userInfo} = this.$store.state.users;
+            return userInfo || {};
         }
     }
 };

@@ -88,6 +88,14 @@ export default {
                         }
                         //映射路由表到vuex
                         this.$store.dispatch('getRoutes', permissions.getRoutes());
+                        //插入动画loading动画
+                        document.getElementById('app').insertAdjacentHTML('afterend', `<div class="lds-css ng-scope">
+                            <div class="lds-double-ring">
+                                <div></div>
+                                <div></div>
+                                <div class="loading-text">加载中,请稍后...</div>
+                            </div>
+                        </div>`);
                         this.$router.push(`/dashboard/index`);
                     }
                 } else {

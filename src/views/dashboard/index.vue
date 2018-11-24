@@ -72,6 +72,11 @@ export default {
             ]
         };
     },
+    mounted() {
+        //移除登录后的动画
+        const loading = document.getElementsByClassName('lds-css');
+        if (loading && loading.length > 0) loading[0].remove();
+    },
     created() {
         this.tableData = [
             {
