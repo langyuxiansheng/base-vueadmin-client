@@ -27,20 +27,22 @@
             <el-col :span="24">
                 <div class="app-row">
                     <span class="app-title">账号:</span>
-                    <span class="app-label">151531531</span>
-                     <el-button type="primary" @click="isUpdate = true">修改密码</el-button>
+                    <span class="app-label">{{user.account}}</span>
                 </div>
                 <div class="app-row">
                     <span class="app-title">姓名:</span>
-                    <span class="app-label">狼宇</span>
+                    <span class="app-label">{{user.adminName}}</span>
                 </div>
                 <div class="app-row">
-                    <span class="app-title">账号:</span>
-                    <span class="app-label">admin</span>
+                    <span class="app-title">联系方式:</span>
+                    <span class="app-label">{{user.phone || '暂无'}}</span>
                 </div>
                 <div class="app-row">
                     <span class="app-title">角色:</span>
-                    <span class="app-label">超级管理员</span>
+                    <span class="app-label">{{user.roleName}}</span>
+                </div>
+                <div class="app-row">
+                    <el-button class="update-pwd" type="primary" @click="isUpdate = true">修改密码</el-button>
                 </div>
             </el-col>
         </el-row>
@@ -140,6 +142,12 @@ export default {
         resetForm (formName) {
             this.$refs[formName].resetFields();
         }
+    },
+    computed: {
+        user() {
+            const {userInfo} = this.$store.state.users;
+            return userInfo || {};
+        }
     }
 };
 </script>
@@ -148,7 +156,6 @@ export default {
         font-size: 16px;
         .app-row{
             margin-bottom: 10px;
-            border-bottom: 1px solid #eaeaea;
             padding-bottom: 10px;
             .app-title{
                 font-weight: bold;

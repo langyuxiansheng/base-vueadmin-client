@@ -96,7 +96,7 @@ export default {
                                 <div class="loading-text">加载中,请稍后...</div>
                             </div>
                         </div>`);
-                        this.$router.push(`/dashboard/index`);
+                        this.$router.push(`/dashboard/welcome`);
                     }
                 } else {
                     this.$message.error('请输入用户名和密码');

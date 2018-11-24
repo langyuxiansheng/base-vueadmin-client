@@ -6,8 +6,8 @@
 const Layout = () =>
     import ('@/views/layout/Layout');
 
-const Dashboard = () =>
-    import ('@/views/dashboard');
+const Welcome = () =>
+    import ('@/views/dashboard/Welcome');
 //示例功能
 const ListDemo = () =>
     import ('@/views/demos/ListDemo');
@@ -29,12 +29,12 @@ export default [{
         },
         component: Layout,
         children: [{
-            path: 'index',
+            path: 'welcome',
             meta: {
-                title: '数据总览',
+                title: '欢迎页',
                 requireAuth: false
             },
-            component: Dashboard
+            component: Welcome
         }]
     },
 
