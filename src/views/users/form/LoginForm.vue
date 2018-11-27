@@ -86,8 +86,11 @@ export default {
                         } else {
                             window.localStorage.setItem(`adminSessionData`, JSON.stringify({userInfo}));
                         }
+                        const routes = permissions.getRoutes();
                         //映射路由表到vuex
-                        this.$store.dispatch('getRoutes', permissions.getRoutes());
+                        this.$store.dispatch('getRoutes', routes);
+                        //登录后挂载
+                        this.$router.addRoutes(routes);
                         //插入动画loading动画
                         document.getElementById('app').insertAdjacentHTML('afterend', `<div class="lds-css ng-scope">
                             <div class="lds-double-ring">
