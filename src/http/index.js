@@ -3,7 +3,6 @@ import apis from './wrapper';
 export const {
     //系统相关
     userLogin,
-    userLogout,
     getPlatformAdminList,
     addPlatformAdmin,
     updatePlatformAdmin,
@@ -18,6 +17,7 @@ export const {
     setPlatformRolePermission,
     getPermissionByRoleID,
     setPlatformAdminRole,
+    getImgValidate,
     //demo示例
     getListDemo,
     addDemo,

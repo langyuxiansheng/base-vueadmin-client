@@ -4,7 +4,7 @@
         <div class="login-form-body">
             <el-row>
                 <el-col :span="24">
-                    <el-form :model="sendData" status-icon :rules="rules" ref="Form" class="right-form" @submit.native.prevent>
+                    <el-form size="medium" :model="sendData" status-icon :rules="rules" ref="Form" class="right-form" @submit.native.prevent>
                         <el-form-item class="user-label" label="" prop="account">
                             <div class="user-input">
                                 <el-input type="text" v-model="sendData.account" placeholder="请输入管理员账号" auto-complete="off"></el-input>
@@ -13,6 +13,15 @@
                         <el-form-item class="user-label" label="" prop="pwd">
                             <div class="user-input">
                                 <el-input type="password" v-model="sendData.pwd" placeholder="请输入管理员密码" auto-complete="off"></el-input>
+                            </div>
+                        </el-form-item>
+                        <el-form-item class="user-label" label="" prop="code">
+                            <div class="user-input">
+                                <el-input type="password" v-model="sendData.code" placeholder="请输入验证码" auto-complete="off">
+                                    <template slot="append">
+                                        <span @click="init" v-html="imgUrl"></span>
+                                    </template>
+                                </el-input>
                             </div>
                         </el-form-item>
                         <el-form-item class="btn-label">
@@ -26,7 +35,7 @@
 </template>
 <script type="text/ecmascript-6">
 import Cookies from 'js-cookie';
-import {userLogin} from '@/http';
+import {userLogin, getImgValidate} from '@/http';
 import permissions from '@/router/permission';
 
 export default {
@@ -51,10 +60,13 @@ export default {
         };
 
         return {
+            // imgUrl: `${process.env.BASE_URL}/v1/common/getImgValidate`,
+            imgUrl: null,
             loading: false,
             sendData: {
                 account: 'admin',
                 pwd: 123456,
+                code: null,
                 passWord: null
             },
 
@@ -67,12 +79,26 @@ export default {
                 pwd: [
                     { required: true, message: '请输入管理员密码', trigger: 'blur' },
                     { validator: validatePass, message: '请输入管理员密码', trigger: 'blur' }
+                ],
+
+                code: [
+                    { required: true, message: '请输入验证码', trigger: 'blur' },
+                    { min: 4, max: 4, message: '长度在 4 个字符', trigger: 'blur' }
                 ]
             }
         };
     },
 
+    created() {
+        this.init();
+    },
+
     methods: {
+        async init() {
+            const {code, data} = await getImgValidate();
+            if (code === 200) this.imgUrl = data;
+            console.log(data);
+        },
         submitForm (formName) {
             this.$refs[formName].validate(async (valid) => {
                 if (valid) {

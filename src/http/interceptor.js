@@ -7,15 +7,9 @@ import axios from 'axios';
 import router from '@/router/index';
 import Cookies from 'js-cookie';
 import { Loading, Message } from 'element-ui';
-
 // axios 配置
 axios.defaults.timeout = 15000;
-
-// const TEST_API = 'http://192.168.0.220';
-// const PRODUCTION_API = 'https://api.xxxxx.cn';
 axios.defaults.baseURL = process.env.BASE_URL;
-
-
 // 配置通用请求动画
 let loading = null;
 axios.interceptors.request.use(config => {

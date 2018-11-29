@@ -8,8 +8,8 @@
                     </el-form-item>
                     <el-form-item label="权限类型" prop="permissionType">
                         <el-radio-group v-model="sendData.permissionType">
-                            <el-radio label="1">菜单</el-radio>
-                            <el-radio label="2">按钮</el-radio>
+                            <el-radio :label="1">菜单</el-radio>
+                            <el-radio :label="2">按钮</el-radio>
                         </el-radio-group>
                     </el-form-item>
                     <el-form-item label="权限排序值">
@@ -146,7 +146,7 @@ export default {
                             this.$emit('refresh');
                         };
                     } else { //修改
-                        const { code } = await updatePermission({ PermissionID: this.PermissionID, data: this.sendData });
+                        const { code } = await updatePermission({ permissionId: this.permissionId, data: this.sendData });
                         if (code === 200) {
                             this.$message.success(this.$t('msg.update_success'));
                             this.dialogConf.isShow = false;

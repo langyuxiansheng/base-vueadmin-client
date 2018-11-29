@@ -1,8 +1,10 @@
-// const PARKING_SERVER = '/parking';
-const COMMON_SERVER = '/common';
 export default {
 
-    userLogin(data) { // 用户登录
+    /**
+     * 用户登录
+     * @param {*} data
+     */
+    userLogin(data) {
         return {
             url: `/login/aminLogin`,
             method: 'post',
@@ -10,10 +12,13 @@ export default {
         };
     },
 
-    userLogout() { // 用户注销
+    /**
+     * 获取图片验证码
+     */
+    getImgValidate() {
         return {
-            url: `${COMMON_SERVER}/parking/owner/loginOut`,
-            method: 'post'
+            url: `/common/getImgValidate`,
+            method: 'get'
         };
     }
 
