@@ -9,7 +9,7 @@ const adminSessionData = window.localStorage.getItem(`adminSessionData`);
  * @param {*} list
  * @param {*} menu
  */
-function iterator(list, menu, isAdmin) {
+const iterator = (list, menu, isAdmin) => {
     for (let item in list) {
         if (isAdmin) { //超级管理员
             list[item].meta.requireAuth = true;
@@ -21,20 +21,24 @@ function iterator(list, menu, isAdmin) {
 }
 
 /**
+ * 获取处理后的路由
+ */
+const getRoutes = () => {
+    const adminSessionData = window.localStorage.getItem(`adminSessionData`);
+    if (!adminSessionData) return [];
+    const { userInfo, menus } = typeof adminSessionData === 'string' ? JSON.parse(adminSessionData) : adminSessionData;
+    const { isAdmin } = userInfo;
+    if (isAdmin) { //超级管理员直接返回所有的菜单
+        iterator(routes, null, isAdmin);
+    } else {
+        menus.forEach((menu) => {
+            iterator(routes, menu);
+        });
+    }
+    return routes;
+}
+
+/**
  * 导出有权限的路由
  */
-export default {
-    getRoutes() {
-        if (!adminSessionData) return [];
-        const { userInfo, menus } = typeof adminSessionData === 'string' ? JSON.parse(adminSessionData) : adminSessionData;
-        const { isAdmin } = userInfo;
-        if (isAdmin) { //超级管理员直接返回所有的菜单
-            iterator(routes, null, isAdmin);
-        } else {
-            menus.forEach((menu) => {
-                iterator(routes, menu);
-            });
-        }
-        return routes;
-    }
-};
+export default { getRoutes };
