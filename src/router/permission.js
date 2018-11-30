@@ -2,7 +2,6 @@
  * 路由权限控制器
  */
 import routes from './routes';
-const adminSessionData = window.localStorage.getItem(`adminSessionData`);
 
 /**
  * 递归查询路由权限

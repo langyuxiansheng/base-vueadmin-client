@@ -3,7 +3,7 @@
  * 用户模块
  */
 import Cookies from 'js-cookie';
-// import types from '../types.js';
+import types from '../types.js';
 //读取本地的信息挂载到vuex
 const adminSessionData = window.localStorage.getItem(`adminSessionData`);
 let info = null;
@@ -39,10 +39,16 @@ const getters = {
 };
 
 const actions = {
-
+    setToken({ commit }, token) {
+        commit(types.SET_USER_TOKEN, token);
+    }
 };
 
 const mutations = {
+
+    [types.SET_USER_TOKEN](state, token) {
+        state.token = token;
+    }
 
     /*   [types.GET_OWNER_ITEM](state, data) {
           state.ownerItem = data;

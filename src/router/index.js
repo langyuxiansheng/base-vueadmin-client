@@ -63,7 +63,8 @@ router.beforeEach((to, from, next) => {
         if (store.getters.token) { // 判断是否登录
             next();
         } else { // 没登录则跳转到登录界面
-            window.localStorage.removeItem('AdminSessionData');
+            debugger
+            window.localStorage.removeItem('adminSessionData');
             next({
                 path: '/login',
                 query: { redirect: to.fullPath }

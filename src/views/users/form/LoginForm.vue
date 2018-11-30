@@ -19,7 +19,7 @@
                             <div class="user-input">
                                 <el-input type="password" v-model="sendData.code" placeholder="请输入验证码" auto-complete="off">
                                     <template slot="append">
-                                        <span @click="init" v-html="imgUrl"></span>
+                                        <span title="看不清?点击换一张" class="validate-img" @click="init" v-html="imgUrl"></span>
                                     </template>
                                 </el-input>
                             </div>
@@ -60,7 +60,6 @@ export default {
         };
 
         return {
-            // imgUrl: `${process.env.BASE_URL}/v1/common/getImgValidate`,
             imgUrl: null,
             loading: false,
             sendData: {
@@ -95,9 +94,8 @@ export default {
 
     methods: {
         async init() {
-            const {code, data} = await getImgValidate();
-            if (code === 200) this.imgUrl = data;
-            console.log(data);
+            const {data} = await getImgValidate();
+            this.imgUrl = data;
         },
         submitForm (formName) {
             this.$refs[formName].validate(async (valid) => {
@@ -115,6 +113,7 @@ export default {
                         const routes = permissions.getRoutes();
                         //映射路由表到vuex
                         this.$store.dispatch('getRoutes', routes);
+                        this.$store.dispatch('setToken', token);
                         //登录后挂载
                         this.$router.addRoutes(routes);
                         //插入动画loading动画
@@ -125,6 +124,7 @@ export default {
                                 <div class="loading-text">加载中,请稍后...</div>
                             </div>
                         </div>`);
+                        // 进入欢迎页
                         this.$router.push(`/dashboard/welcome`);
                     }
                 } else {
@@ -160,6 +160,12 @@ export default {
       margin: 0 auto;
       .user-label {
         margin-bottom: 28px;
+        .validate-img{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
       }
       .btn-label {
         margin-top: 34px;
