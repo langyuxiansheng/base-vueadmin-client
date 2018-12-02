@@ -84,10 +84,10 @@ export default {
             const nodes = this.$refs.tree.getCheckedNodes();
             let menus = [];
             for (const m of nodes) {
-                if (m.ParentID === 0) {
+                if (m.parentId === 0) {
                     menus.push(m.permissionId);
                 }
-                if (m.ParentID) {
+                if (m.parentId) {
                     menus.push(m.parentId);
                     menus.push(m.permissionId);
                 }
