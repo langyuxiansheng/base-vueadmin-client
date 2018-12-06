@@ -61,7 +61,7 @@ export default [{
         name: 'system',
         meta: {
             requireAuth: false, //菜单权限
-            title: '系统设置', //菜单名
+            title: '系统管理', //菜单名
             icon: 'fa fa-cog', //菜单图标
         },
         component: Layout,

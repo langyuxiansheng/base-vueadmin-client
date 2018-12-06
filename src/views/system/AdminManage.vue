@@ -14,7 +14,7 @@
                     <span v-if="col.key === 'operation' && scope.row.isAdmin !== 1">
                         <el-button type="primary" @click="showDialog ({ type:'setRole',adminId:scope.row.adminId,roleId:scope.row.roleId })">设置角色</el-button>
                         <el-button type="warning">重置密码</el-button>
-                        <el-button v-if="scope.row.Status" type="warning" @click="updateAdmin(scope.row.adminId,0)">启用</el-button>
+                        <el-button v-if="scope.row.status" type="warning" @click="updateAdmin(scope.row.adminId,0)">启用</el-button>
                         <el-button v-else type="warning" @click="updateAdmin(scope.row.adminId,1)">禁用</el-button>
                         <el-button type="danger" @click="delAdmin(scope.row.adminId)">注销</el-button>
                     </span>

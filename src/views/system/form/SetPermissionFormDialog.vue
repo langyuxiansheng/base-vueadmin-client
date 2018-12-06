@@ -5,7 +5,7 @@
                 <el-tree
                     :props="treeConfig"
                     show-checkbox
-                    node-key="PermissionID"
+                    node-key="permissionId"
                     ref="tree"
                     :default-checked-keys="defaulfCheckedNodes"
                     :highlight-current="true"
@@ -84,7 +84,7 @@ export default {
             const nodes = this.$refs.tree.getCheckedNodes();
             let menus = [];
             for (const m of nodes) {
-                if (m.parentId === 0) {
+                if (m.parentId == 0) {
                     menus.push(m.permissionId);
                 }
                 if (m.parentId) {
@@ -117,7 +117,7 @@ export default {
             if (menus && menus.length > 0 && onMenu && onMenu.length > 0) {
                 for (const item of menus) {
                     for (const checkedId of onMenu) {
-                        if (item.children && item.permissionId === checkedId) {
+                        if (item.children && item.permissionId == checkedId) {
                             onMenu.splice(onMenu.findIndex(i => checkedId == i), 1);
                         }
                     }

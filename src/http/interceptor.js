@@ -34,7 +34,7 @@ axios.interceptors.response.use(response => {
             case 200:
                 data = response.data;
                 break;
-                /* case 401: // 401 清除token信息并跳转到登录页面
+            case 401: // 401 清除token信息并跳转到登录页面
                 Message.error({
                     message: '身份过期，请重新登录'
                 });
@@ -44,7 +44,7 @@ axios.interceptors.response.use(response => {
                         query: { redirect: router.currentRoute.fullPath }
                     });
                 }, 1200);
-                break; */
+                break;
             case 403: //无权限
                 router.replace({
                     name: '/403',

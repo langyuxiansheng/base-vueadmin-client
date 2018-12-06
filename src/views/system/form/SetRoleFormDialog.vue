@@ -10,7 +10,7 @@
                             v-for="role in roles"
                             :key="role.roleId"
                             :label="role.roleName"
-                            :value="role.roleId"/>
+                            :value="Number(role.roleId)"/>
                         </el-select>
                     </el-form-item>
                 </el-col>
