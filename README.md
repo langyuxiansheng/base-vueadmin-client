@@ -16,6 +16,12 @@
 
 可以配套使用的后台API服务 [基于KOA2的restful 风格的后台API服务](https://github.com/langyuxiansheng/base-restfulapi-server)
 
+在线预览地址
+------------
+```
+http://admin.hao2013.cn
+```
+
 ### 其它
 ---
 
