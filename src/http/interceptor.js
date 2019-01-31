@@ -10,7 +10,7 @@ import { Loading, Message } from 'element-ui';
 // axios 配置
 axios.defaults.timeout = 15000;
 //axios.defaults.baseURL = process.env.BASE_URL;
-axios.defaults.baseURL = 'api';
+axios.defaults.baseURL = '/api';
 
 // 配置通用请求动画
 let loading = null;
