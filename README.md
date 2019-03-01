@@ -16,10 +16,10 @@
 
 可以配套使用的后台API服务 [基于KOA2的restful 风格的后台API服务](https://github.com/langyuxiansheng/base-restfulapi-server)
 
-在线预览地址[Demo](http://admin.hao2013.cn)
+在线预览地址[Demo](http://111.231.225.103/apis/)
 ------------
 ```
-http://admin.hao2013.cn
+http://111.231.225.103/
 ```
 
 ### 其它
