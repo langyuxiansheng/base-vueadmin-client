@@ -12,7 +12,8 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/api': {
-                target: "http://127.0.0.1:3000/v1/",
+                //target: "http://127.0.0.1:3000/v1/",
+				target: "http://api.hao2013.cn/apiv1/v1/",
                 changeOrigin: true,
                 pathRewrite: {
                     '^/api': ''
